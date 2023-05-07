@@ -1,5 +1,5 @@
 ---
-name: BaseAbility
+name: Ability
 version: 0.0.1
 main: Echore\Ability\Main
 api: 4.20.0
