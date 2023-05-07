@@ -5,6 +5,7 @@ namespace Echore\Ability;
 class Modifier {
 
 	public int|float $absolute;
+
 	public int|float $multiplier;
 
 	/**

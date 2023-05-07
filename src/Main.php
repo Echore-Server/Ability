@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Echore\Ability;
 
 use pocketmine\plugin\PluginBase;
+use RuntimeException;
 
 class Main extends PluginBase {
 
@@ -12,7 +13,7 @@ class Main extends PluginBase {
 
 	public static function getInstance(): self {
 		if (is_null(self::$instance)) {
-			throw new \RuntimeException("plugin not loaded");
+			throw new RuntimeException("plugin not loaded");
 		}
 
 		return self::$instance;

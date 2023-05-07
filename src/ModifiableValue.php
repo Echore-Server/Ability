@@ -5,6 +5,7 @@ namespace Echore\Ability;
 class ModifiableValue {
 
 	protected int|float $original;
+
 	protected int|float $value;
 
 
@@ -14,6 +15,7 @@ class ModifiableValue {
 	protected array $modifiers;
 
 	protected int|float $finalValue;
+
 	protected bool $dirty;
 
 	public function __construct(int|float $original) {

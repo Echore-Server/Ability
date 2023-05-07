@@ -8,6 +8,7 @@ use Echore\Ability\restriction\IAbilityRestriction;
 abstract class BaseAbility {
 
 	protected Cooltime $cooltime;
+
 	protected ?IAbilityRestriction $restriction;
 
 	protected StatsList $stats;
@@ -58,6 +59,7 @@ abstract class BaseAbility {
 	 */
 	public function setRestriction(?IAbilityRestriction $restriction): BaseAbility {
 		$this->restriction = $restriction;
+
 		return $this;
 	}
 

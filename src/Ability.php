@@ -7,14 +7,20 @@ use pocketmine\scheduler\ClosureTask;
 use pocketmine\scheduler\TaskHandler;
 use pocketmine\scheduler\TaskScheduler;
 use pocketmine\Server;
+use RuntimeException;
 
 abstract class Ability {
 
 	protected TaskScheduler $scheduler;
+
 	protected bool $active;
+
 	protected bool $disposed;
+
 	protected Player $player;
+
 	private TaskHandler $schedulerHeartBeater;
+
 	private BaseAbility $base;
 
 	public function __construct(Player $player, BaseAbility $base) {
@@ -43,7 +49,7 @@ abstract class Ability {
 
 	public function activate(): ActivateAbilityResult {
 		if ($this->disposed) {
-			throw new \RuntimeException("cant activate disposed ability");
+			throw new RuntimeException("cant activate disposed ability");
 		}
 
 		if ($this->base->getCooltime()->getStock() <= 0) {

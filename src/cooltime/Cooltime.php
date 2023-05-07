@@ -13,6 +13,7 @@ class Cooltime {
 	protected TickTimer $timer;
 
 	protected int $maxStock;
+
 	protected int $stock;
 
 	protected ?ICooltimeRestriction $restriction;
@@ -54,6 +55,7 @@ class Cooltime {
 	 */
 	public function setRestriction(?ICooltimeRestriction $restriction): Cooltime {
 		$this->restriction = $restriction;
+
 		return $this;
 	}
 
@@ -85,6 +87,7 @@ class Cooltime {
 	 */
 	public function setMaxStock(int $maxStock): Cooltime {
 		$this->maxStock = $maxStock;
+
 		return $this;
 	}
 
@@ -102,6 +105,7 @@ class Cooltime {
 	 */
 	public function setStock(int $stock): Cooltime {
 		$this->stock = $stock;
+
 		return $this;
 	}
 

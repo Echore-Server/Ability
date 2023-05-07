@@ -12,6 +12,7 @@ class TickTimer {
 	protected int $time;
 
 	protected bool $ticking;
+
 	protected bool $started;
 
 	/**
