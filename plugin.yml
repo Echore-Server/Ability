@@ -1,0 +1,9 @@
+---
+name: BaseAbility
+version: 0.0.1
+main: Echore\Ability\Main
+api: 4.20.0
+author: Echore
+authors:
+  - Lyrica0954
+src-namespace-prefix: Echore\Ability
