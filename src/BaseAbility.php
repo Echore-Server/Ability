@@ -4,6 +4,7 @@ namespace Echore\Ability;
 
 use Echore\Ability\cooltime\Cooltime;
 use Echore\Ability\restriction\IAbilityRestriction;
+use Echore\Stargazer\ModifiableValueRegistry;
 
 abstract class BaseAbility {
 
@@ -11,7 +12,7 @@ abstract class BaseAbility {
 
 	protected ?IAbilityRestriction $restriction;
 
-	protected StatsList $stats;
+	protected ModifiableValueRegistry $stats;
 
 	protected AbilityTraitList $traits;
 
@@ -24,12 +25,12 @@ abstract class BaseAbility {
 
 	abstract protected function getInitialCooltime(): Cooltime;
 
-	abstract protected function getInitialStats(): StatsList;
+	abstract protected function getInitialStats(): ModifiableValueRegistry;
 
 	/**
-	 * @return StatsList
+	 * @return ModifiableValueRegistry
 	 */
-	public function getStats(): StatsList {
+	public function getStats(): ModifiableValueRegistry {
 		return $this->stats;
 	}
 

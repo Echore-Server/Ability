@@ -5,7 +5,7 @@ namespace Echore\Ability;
 class AbilityTraitList {
 
 	/**
-	 * @var array<string, StatsList>
+	 * @var array<string, AbilityTrait>
 	 */
 	protected array $traits;
 

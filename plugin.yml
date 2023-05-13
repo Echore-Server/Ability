@@ -7,3 +7,5 @@ author: Echore
 authors:
   - Lyrica0954
 src-namespace-prefix: Echore\Ability
+depend:
+  - Stargazer

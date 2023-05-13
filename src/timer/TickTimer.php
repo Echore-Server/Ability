@@ -3,7 +3,7 @@
 namespace Echore\Ability\timer;
 
 use Closure;
-use Echore\Ability\ModifiableValue;
+use Echore\Stargazer\ModifiableValue;
 
 class TickTimer {
 

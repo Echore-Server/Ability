@@ -2,9 +2,9 @@
 
 namespace Echore\Ability\cooltime;
 
-use Echore\Ability\ModifiableValue;
 use Echore\Ability\restriction\ICooltimeRestriction;
 use Echore\Ability\timer\TickTimer;
+use Echore\Stargazer\ModifiableValue;
 
 class Cooltime {
 

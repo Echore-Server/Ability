@@ -2,13 +2,15 @@
 
 namespace Echore\Ability;
 
+use Echore\Stargazer\ModifiableValueRegistry;
+
 class AbilityTrait {
 
 	protected string $identifier;
 
-	protected StatsList $stats;
+	protected ModifiableValueRegistry $stats;
 
-	public function __construct(string $identifier, StatsList $stats) {
+	public function __construct(string $identifier, ModifiableValueRegistry $stats) {
 		$this->identifier = $identifier;
 		$this->stats = $stats;
 	}
@@ -21,9 +23,9 @@ class AbilityTrait {
 	}
 
 	/**
-	 * @return StatsList
+	 * @return ModifiableValueRegistry
 	 */
-	public function getStats(): StatsList {
+	public function getStats(): ModifiableValueRegistry {
 		return $this->stats;
 	}
 }
