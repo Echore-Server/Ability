@@ -10,15 +10,12 @@ abstract class BaseAbility {
 
 	protected Cooltime $cooltime;
 
-	protected ?IAbilityRestriction $restriction;
-
 	protected ModifiableValueRegistry $stats;
 
 	protected AbilityTraitList $traits;
 
 	public function __construct() {
 		$this->cooltime = $this->getInitialCooltime();
-		$this->restriction = null;
 		$this->stats = $this->getInitialStats();
 		$this->traits = new AbilityTraitList();
 	}
@@ -44,26 +41,6 @@ abstract class BaseAbility {
 	abstract public function getName(): string;
 
 	abstract public function getDescription(): string;
-
-
-	/**
-	 * @return IAbilityRestriction|null
-	 */
-	public function getRestriction(): ?IAbilityRestriction {
-		return $this->restriction;
-	}
-
-	/**
-	 * @param IAbilityRestriction|null $restriction
-	 *
-	 * @return BaseAbility
-	 */
-	public function setRestriction(?IAbilityRestriction $restriction): BaseAbility {
-		$this->restriction = $restriction;
-
-		return $this;
-	}
-
 
 	/**
 	 * @return Cooltime

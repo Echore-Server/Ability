@@ -60,10 +60,6 @@ abstract class Ability {
 			return ActivateAbilityResult::FAILED_ALREADY_ACTIVE();
 		}
 
-		if (!($this->base->getRestriction()?->activate() ?? true)) {
-			return ActivateAbilityResult::FAILED_RESTRICTION();
-		}
-
 		$this->base->getCooltime()->start();
 		$result = $this->onActivate();
 

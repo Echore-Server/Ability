@@ -2,7 +2,6 @@
 
 namespace Echore\Ability\cooltime;
 
-use Echore\Ability\restriction\ICooltimeRestriction;
 use Echore\Ability\timer\TickTimer;
 use Echore\Stargazer\ModifiableValue;
 
@@ -16,21 +15,13 @@ class Cooltime {
 
 	protected int $stock;
 
-	protected ?ICooltimeRestriction $restriction;
-
 	public function __construct(int $original) {
 		$this->base = new ModifiableValue($original);
 		$this->timer = new TickTimer($this->base);
 		$this->timer->addCompleteHook(function(): void {
-			if (!($this->restriction?->stock() ?? true)) {
-				return;
-			}
-
 			$this->stock++;
 			$this->start();
 		});
-
-		$this->restriction = null;
 	}
 
 	public function start(): void {
@@ -39,24 +30,6 @@ class Cooltime {
 		}
 
 		$this->timer->start();
-	}
-
-	/**
-	 * @return ICooltimeRestriction|null
-	 */
-	public function getRestriction(): ?ICooltimeRestriction {
-		return $this->restriction;
-	}
-
-	/**
-	 * @param ICooltimeRestriction|null $restriction
-	 *
-	 * @return Cooltime
-	 */
-	public function setRestriction(?ICooltimeRestriction $restriction): Cooltime {
-		$this->restriction = $restriction;
-
-		return $this;
 	}
 
 	/**
@@ -110,9 +83,6 @@ class Cooltime {
 	}
 
 	public function tick(int $ticks): void {
-		if (!($this->restriction?->tick() ?? true)) {
-			return;
-		}
 		$this->timer->tick($ticks);
 	}
 }
