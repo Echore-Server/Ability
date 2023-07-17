@@ -4,7 +4,7 @@ namespace Echore\Ability;
 
 use Echore\Stargazer\ModifiableValueRegistry;
 
-class AbilityTrait {
+class StatsTrait {
 
 	protected string $identifier;
 

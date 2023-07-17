@@ -2,10 +2,10 @@
 
 namespace Echore\Ability;
 
-class AbilityTraitList {
+class StatsTraitList {
 
 	/**
-	 * @var array<string, AbilityTrait>
+	 * @var array<string, StatsTrait>
 	 */
 	protected array $traits;
 
@@ -13,7 +13,7 @@ class AbilityTraitList {
 		$this->traits = [];
 	}
 
-	public function add(AbilityTrait $trait): void {
+	public function add(StatsTrait $trait): void {
 		$this->traits[$trait->getIdentifier()] = $trait;
 	}
 
@@ -27,7 +27,7 @@ class AbilityTraitList {
 		return isset($this->traits[$identifier]);
 	}
 
-	public function checkAndGet(string $identifier, AbilityTrait &$trait): bool {
+	public function checkAndGet(string $identifier, StatsTrait &$trait): bool {
 		if ($this->has($identifier)) {
 			$trait = $this->traits[$identifier];
 
@@ -37,7 +37,7 @@ class AbilityTraitList {
 		return false;
 	}
 
-	public function get(string $identifier): ?AbilityTrait {
+	public function get(string $identifier): ?StatsTrait {
 		return $this->traits[$identifier] ?? null;
 	}
 }
