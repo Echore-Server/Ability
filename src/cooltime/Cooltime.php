@@ -15,8 +15,10 @@ class Cooltime {
 
 	protected int $stock;
 
-	public function __construct(int $original) {
-		$this->base = new ModifiableValue($original);
+	public function __construct(ModifiableValue $original) {
+		$this->base = $original;
+		$this->maxStock = 1;
+		$this->stock = 1;
 		$this->timer = new TickTimer($this->base);
 		$this->timer->addCompleteHook(function(): void {
 			$this->stock++;
@@ -36,7 +38,7 @@ class Cooltime {
 	 * @return ModifiableValue
 	 */
 	public function get(): ModifiableValue {
-		return $this->base;
+		return $this->timer->getBase();
 	}
 
 	/**
