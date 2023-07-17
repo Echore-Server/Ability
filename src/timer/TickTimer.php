@@ -79,6 +79,20 @@ class TickTimer {
 		$this->time = $this->base->getFinalFloored();
 	}
 
+	/**
+	 * @return bool
+	 */
+	public function isRunning(): bool {
+		return $this->started;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isTicking(): bool {
+		return $this->ticking;
+	}
+
 	public function cancel(): void {
 		$this->started = false;
 		$this->ticking = false;
