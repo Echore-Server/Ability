@@ -104,6 +104,8 @@ class TickTimer {
 			return;
 		}
 
+		$this->resume();
+
 		$this->time = $this->base->getFinalFloored();
 	}
 
