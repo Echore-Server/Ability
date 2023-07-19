@@ -52,12 +52,12 @@ class CooltimeDisplayer {
 
 			$remainSeconds = round($cooltime->getTimer()->getTime() / 20, 1);
 			$stockStatus = $cooltime->getMaxStock() > 1 ? "§e§l{$cooltime->getStock()}§r§f/{$cooltime->getMaxStock()} " : "";
-			$status = $stockStatus . $cooltime->getTimer()->isRunning() ? "§a使用可能" : "§c残り {$remainSeconds}秒";
+			$status = $stockStatus . (!$cooltime->getTimer()->isRunning() ? "§a使用可能" : "§c残り {$remainSeconds}秒");
 
 			$text .= "§7$label: $status\n";
 		}
 
-		$this->player->sendPopup($text);
+		$this->player->sendPopup(rtrim($text, "\n"));
 	}
 
 	/**
