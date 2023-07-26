@@ -99,6 +99,14 @@ class TickTimer {
 		$this->time = -1;
 	}
 
+	public function tickTo(int $remainTime): int{
+		$ticks = $this->time - $remainTime;
+
+		$this->tick($ticks);
+
+		return $ticks;
+	}
+
 	public function restart(): void {
 		if (!$this->started) {
 			return;
