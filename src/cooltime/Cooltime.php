@@ -21,9 +21,27 @@ class Cooltime {
 		$this->stock = 1;
 		$this->timer = new TickTimer($this->base);
 		$this->timer->addCompleteHook(function(): void {
-			$this->stock++;
+			$this->setStock($this->getStock() + 1);
 			$this->start();
 		});
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getStock(): int {
+		return $this->stock;
+	}
+
+	/**
+	 * @param int $stock
+	 *
+	 * @return Cooltime
+	 */
+	public function setStock(int $stock): Cooltime {
+		$this->stock = $stock;
+
+		return $this;
 	}
 
 	public function start(): void {
@@ -62,24 +80,6 @@ class Cooltime {
 	 */
 	public function setMaxStock(int $maxStock): Cooltime {
 		$this->maxStock = $maxStock;
-
-		return $this;
-	}
-
-	/**
-	 * @return int
-	 */
-	public function getStock(): int {
-		return $this->stock;
-	}
-
-	/**
-	 * @param int $stock
-	 *
-	 * @return Cooltime
-	 */
-	public function setStock(int $stock): Cooltime {
-		$this->stock = $stock;
 
 		return $this;
 	}
