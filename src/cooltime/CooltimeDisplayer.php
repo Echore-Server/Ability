@@ -4,7 +4,7 @@ namespace Echore\Ability\cooltime;
 
 use pocketmine\player\Player;
 
-class CooltimeDisplayer {
+class CooltimeDisplayer implements ICooltimeDisplayer {
 
 	/**
 	 * @var (array{0: Cooltime, 1: string})[]
@@ -13,13 +13,29 @@ class CooltimeDisplayer {
 
 	protected Player $player;
 
+	protected string $format;
+
 	/**
 	 * @param Player $player
 	 */
 	public function __construct(Player $player) {
 		$this->cooltimes = [];
-
+		$this->format = "§r§7%s: %s %s\n";
 		$this->player = $player;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getFormat(): string {
+		return $this->format;
+	}
+
+	/**
+	 * @param string $format
+	 */
+	public function setFormat(string $format): void {
+		$this->format = $format;
 	}
 
 	public function add(Cooltime $cooltime, string $label): void {
@@ -50,12 +66,11 @@ class CooltimeDisplayer {
 			 */
 			[$cooltime, $label] = $data;
 
-			// TODO: フォーマットをサポート
 			$remainSeconds = round($cooltime->getTimer()->getTime() / 20, 1);
-			$stockStatus = $cooltime->getMaxStock() > 1 ? "§e§l{$cooltime->getStock()}§r§8/{$cooltime->getMaxStock()} " : "";
-			$status = $stockStatus . (!$cooltime->getTimer()->isRunning() ? "§a使用可能" : ($cooltime->getStock() > 0 ? "§e{$remainSeconds}秒" : "§c残り {$remainSeconds}秒"));
+			$stockStatus = $cooltime->getMaxStock() > 1 ? "§e§l{$cooltime->getStock()}§r§8/{$cooltime->getMaxStock()}" : "";
+			$status = (!$cooltime->getTimer()->isRunning() ? "§a使用可能" : ($cooltime->getStock() > 0 ? "§e{$remainSeconds}秒" : "§c残り {$remainSeconds}秒"));
 
-			$text .= "§7$label: $status\n";
+			$text .= sprintf($this->format, $label, $stockStatus, $status);
 		}
 
 		$this->player->sendPopup(rtrim($text, "\n"));
