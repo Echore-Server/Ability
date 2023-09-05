@@ -20,7 +20,7 @@ class Cooltime {
 		$this->maxStock = 1;
 		$this->stock = 1;
 		$this->timer = new TickTimer($this->base);
-		$this->timer->addCompleteHook(function(): void {
+		$this->timer->getCompleteHooks()->add(function(): void {
 			$this->setStock($this->getStock() + 1);
 			$this->start();
 		});

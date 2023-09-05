@@ -4,6 +4,7 @@ namespace Echore\Ability\timer;
 
 use Closure;
 use Echore\Stargazer\ModifiableValue;
+use pocketmine\utils\ObjectSet;
 
 class TickTimer {
 
@@ -16,43 +17,49 @@ class TickTimer {
 	protected bool $started;
 
 	/**
-	 * @var Closure(int $ticks): void[]
+	 * @var ObjectSet<Closure(int &$ticks): bool>
 	 */
-	protected array $tickHooks;
+	protected ObjectSet $tickHooks;
 
 	/**
-	 * @var Closure(): void[]
+	 * @var ObjectSet<Closure(): void>
 	 */
-	protected array $completeHooks;
+	protected ObjectSet $completeHooks;
+
+	/**
+	 * @var ObjectSet<Closure(int): void>
+	 */
+	protected ObjectSet $tickListeners;
 
 	public function __construct(ModifiableValue $base) {
 		$this->base = $base;
 		$this->time = -1;
 		$this->started = false;
 		$this->ticking = false;
-		$this->tickHooks = [];
-		$this->completeHooks = [];
+		$this->tickHooks = new ObjectSet();
+		$this->completeHooks = new ObjectSet();
+		$this->tickListeners = new ObjectSet();
 	}
 
 	/**
-	 * @param Closure(int $ticks): void $callback
-	 *
-	 * @return void
+	 * @return ObjectSet<Closure(int $ticks): void>
 	 */
-	public function addTickHook(Closure $callback): void {
-		$this->tickHooks[spl_object_hash($callback)] = $callback;
+	public function getTickHooks(): ObjectSet {
+		return $this->tickHooks;
 	}
 
-	public function addCompleteHook(Closure $callback): void {
-		$this->completeHooks[spl_object_hash($callback)] = $callback;
+	/**
+	 * @return ObjectSet<Closure(): void>
+	 */
+	public function getCompleteHooks(): ObjectSet {
+		return $this->completeHooks;
 	}
 
-	public function removeCompleteHook(Closure $callback): void {
-		unset($this->completeHooks[spl_object_hash($callback)]);
-	}
-
-	public function removeTickHook(Closure $callback): void {
-		unset($this->tickHooks[spl_object_hash($callback)]);
+	/**
+	 * @return ObjectSet<Closure(int): void>
+	 */
+	public function getTickListeners(): ObjectSet {
+		return $this->tickListeners;
 	}
 
 	/**
@@ -99,7 +106,7 @@ class TickTimer {
 		$this->time = -1;
 	}
 
-	public function tickTo(int $remainTime): int{
+	public function tickTo(int $remainTime): int {
 		$ticks = $this->time - $remainTime;
 
 		$this->tick($ticks);
@@ -107,25 +114,21 @@ class TickTimer {
 		return $ticks;
 	}
 
-	public function restart(): void {
-		if (!$this->started) {
-			return;
-		}
-
-		$this->resume();
-
-		$this->time = $this->base->getFinalFloored();
-	}
-
 	public function tick(int $ticks): void {
 		if (!$this->ticking) {
 			return;
 		}
 
+		foreach ($this->tickHooks as $hook) {
+			if (!($hook)($ticks)) {
+				return;
+			}
+		}
+
 		$this->time -= $ticks;
 
-		foreach ($this->tickHooks as $hook) {
-			($hook)($ticks);
+		foreach ($this->tickListeners as $listener) {
+			($listener)($ticks);
 		}
 
 		if ($this->time <= 0) {
@@ -147,12 +150,14 @@ class TickTimer {
 		}
 	}
 
-	public function stop(): void {
+	public function restart(): void {
 		if (!$this->started) {
 			return;
 		}
 
-		$this->ticking = false;
+		$this->resume();
+
+		$this->time = $this->base->getFinalFloored();
 	}
 
 	public function resume(): void {
@@ -161,6 +166,14 @@ class TickTimer {
 		}
 
 		$this->ticking = true;
+	}
+
+	public function stop(): void {
+		if (!$this->started) {
+			return;
+		}
+
+		$this->ticking = false;
 	}
 
 }
